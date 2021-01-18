@@ -67,7 +67,7 @@ public class BoardDao {
 			query +="			password,";
 			query +="			content,";
 			query +="			reg_date";
-			query +=" from guestbook";
+			query +=" from board";
 			
 			pstmt = conn.prepareStatement(query);
 			
