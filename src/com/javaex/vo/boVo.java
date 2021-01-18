@@ -86,6 +86,10 @@ public class boVo {
 			return "boVo [no=" + no + ", title=" + title + ", content=" + content + ", hit=" + hit + ", regdate="
 					+ regdate + ", userno=" + userno + ", name=" + name + "]";
 		}
+
+
+	
+		}
 		
 		
 		
