@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.javaex.dao.BoardDao;
+import com.javaex.dao.GuestDao;
 import com.javaex.util.WebUtil;
+import com.javaex.vo.GuestVo;
 import com.javaex.vo.boVo;
 
 @WebServlet("/board")
@@ -26,8 +28,16 @@ public class BoardController extends HttpServlet {
 		//데이터가 오는걸 action으로 구분
 		System.out.println("action="+action);
 		
-		if("list".equals(action)) {
-			System.out.println("게시판 리스트 읽기");
+		if("list".equals(action)){
+			//System.out.println("리스트 처리");
+			BoardDao bDao = new BoardDao();
+			List<boVo> bList= bDao.getList();
+
+			request.setAttribute("bList",bList);
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/addList.jsp"); //jsp파일 위치를 알려줌
+			rd.forward(request, response);
+		
+		
 			WebUtil.forward(request, response, "/WEB-INF/views/board/list.jsp");
 			
 		}else if ("read".equals(action)) {//페이지 들어갈 때 마다 조회수가 1 들어나야함 
@@ -61,21 +71,9 @@ public class BoardController extends HttpServlet {
 			WebUtil.forward(request, response, "/WEB-INF/views/board/writeForm.jsp");
 		
 			Object authVo = null;
-			if(authVo == null) { //글쓰기 업로드 실패
-				System.out.println("글 업로드 실패");
-				//리다이렉트 --> 글쓰기 폼
-				WebUtil.redirect(request, response, "/mysite2/board?action=writeForm&result=fail");
-				
-			}else { //업로드 성공일때
-				System.out.println("업로드 성공");
-				
-				//세션영역에 필요한값(vo) 넣어준다.
-				HttpSession session = request.getSession();
-				session.setAttribute("authUser", authVo);
-				
-				WebUtil.redirect(request, response, "/WEB-INF/views/board/read.jsp");
-					
-			}
+			System.out.println("글 업로드 실패");
+			//리다이렉트 --> 글쓰기 폼
+			WebUtil.redirect(request, response, "/mysite2/board?action=writeForm&result=fail");
 		}else if("modifyForm".equals(action)) {
 			System.out.println("게시글 수정");
 			request.setCharacterEncoding("utf-8");
@@ -88,22 +86,10 @@ public class BoardController extends HttpServlet {
 			
 			WebUtil.forward(request, response, "/WEB-INF/views/board/modifyForm.jsp");
 			
-			Object authVo1 = null;
-			if(authVo1 == null) { //글쓰기 업로드 실패
-				System.out.println("글 업로드 실패");
-				//리다이렉트 --> 글쓰기 폼
-				WebUtil.redirect(request, response, "/mysite2/board?action=writeForm&result=fail");
-				
-			}else { //업로드 성공일때
-				System.out.println("업로드 성공");
-				
-				//세션영역에 필요한값(vo) 넣어준다.
-				HttpSession session = request.getSession();
-				session.setAttribute("authUser", authVo1);
-				
-				WebUtil.redirect(request, response, "/WEB-INF/views/board/read.jsp");
-				
-		} 
+
+			System.out.println("글 업로드 실패");
+			//리다이렉트 --> 글쓰기 폼
+			WebUtil.redirect(request, response, "/mysite2/board?action=writeForm&result=fail"); 
 		}else if("delete".equals(action)) { //삭제기능
 			
 			System.out.println("게시글 삭제");
