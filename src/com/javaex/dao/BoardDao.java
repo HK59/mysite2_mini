@@ -96,8 +96,8 @@ public class BoardDao {
 		try {		
 			// 3. SQL문 준비 / 바인딩 / 실행
 			String query="";
-			query +=" insert into guestbook";
-			query +=" values (seq_guestbook_no.nextval, ?, ?, ?, sysdate)";
+			query +=" insert into board";
+			query +=" values (seq_board_no.nextval, ?, ?, ?, sysdate)";
 			
 			pstmt = conn.prepareStatement(query);
 			
@@ -125,7 +125,7 @@ public class BoardDao {
 		try {		
 			// 3. SQL문 준비 / 바인딩 / 실행
 			String query="";
-			query +=" delete guestbook";
+			query +=" delete board";
 			query +=" where no = ?";
 			query +=" and password = ?";
 			
@@ -149,7 +149,7 @@ public class BoardDao {
 		
 	}
 
-	public int guestDelete(boVo botVo) {
+	public int boardDelete(boVo boVo) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
